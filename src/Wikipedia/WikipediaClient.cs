@@ -1,5 +1,6 @@
 ﻿namespace Wikipedia;
 
+
 public class WikipediaClient : IDisposable
 {
 
@@ -25,7 +26,7 @@ public class WikipediaClient : IDisposable
     /// <summary>
     /// Nuevo Cliente.
     /// </summary>
-    /// <param name="client"></param>
+    /// <param name="client">cliente defecto.</param>
     public WikipediaClient(HttpClient? client = null)
     {
         _userClient = client;
@@ -33,80 +34,96 @@ public class WikipediaClient : IDisposable
         if (_userClient == null)
             _httpClient = new HttpClient();
 
-        _options = new JsonSerializerOptions();
-        _options.PropertyNamingPolicy = LowerCasePolicy.Instance;
+        _options = new JsonSerializerOptions
+        {
+            PropertyNamingPolicy = LowerCasePolicy.Instance
+        };
     }
 
 
-    ///<summary>
-    /// Set to true to use HTTPS instead of HTTP. Defaults to true.
-    ///</summary>
+
+    /// <summary>
+    /// Activar HTTPS.
+    /// </summary>
     public bool UseTls { get; set; } = true;
 
-    ///<summary>
-    ///The default language to use. Can be overriden on each request.
-    ///</summary>
+
+    /// <summary>
+    /// Lenguaje por defecto.
+    /// </summary>
     public WikiLanguage DefaultLanguage { get; set; } = WikiLanguage.English;
 
 
 
-    public void Dispose()
-    {
-        Dispose(true);
-        GC.SuppressFinalize(this);
-    }
-
-    protected virtual void Dispose(bool disposing)
-    {
-        if (disposing)
-            _httpClient?.Dispose();
-    }
-
+    /// <summary>
+    /// Buscar.
+    /// </summary>
+    /// <param name="query">Consulta.</param>
+    /// <param name="token">Token de cancelación.</param>
     public async Task<WikiSearchResponse> SearchAsync(string query, CancellationToken token = default)
     {
-        return await SearchAsync(new WikiSearchRequest(query), token).ConfigureAwait(false);
+        return await SearchAsync(new WikiSearchRequest(query), token);
     }
 
+
+
+    /// <summary>
+    /// Buscar.
+    /// </summary>
+    /// <param name="request">Request.</param>
+    /// <param name="token">Token de cancelación.</param>
     public async Task<WikiSearchResponse> SearchAsync(WikiSearchRequest request, CancellationToken token = default)
     {
+
+        // Establecer idioma por defecto.
         if (request.Language == WikiLanguage.NotSet)
             request.Language = DefaultLanguage;
 
-        var client = _userClient ?? _httpClient;
+        // Cliente http.
+        HttpClient? client = (_userClient ?? _httpClient)
+                             ?? throw new InvalidOperationException("Cliente HTTP es null");
 
-        if (client == null)
-            throw new InvalidOperationException("Bug check: HttpClient is null");
+        // Crear el request.
+        using HttpRequestMessage httpReq = CreateHttpRequest(request);
 
-        using var httpReq = CreateHttpRequest(request);
-        using var httpResp = await client.SendAsync(httpReq, token).ConfigureAwait(false);
-        using var contentStream = await httpResp.Content.ReadAsStreamAsync().ConfigureAwait(false);
+        // Respuesta de la API.
+        using HttpResponseMessage httpResp = await client.SendAsync(httpReq, token);
 
+        // Stream.
+        using System.IO.Stream contentStream = await httpResp.Content.ReadAsStreamAsync();
+
+        // Obtener el objeto.
         var searchResp = await JsonSerializer.DeserializeAsync<WikiSearchResponse>(contentStream, _options, token)
-            .ConfigureAwait(false);
+            ?? throw new InvalidOperationException("Unable to read query response");
 
-        if (searchResp == null)
-            throw new InvalidOperationException("Unable to read query response");
 
-        var query = searchResp.QueryResult;
+        // Resultado de la query.
+        QueryResult query = searchResp.QueryResult ?? new();
 
-        //We do this to ensure users are not bothered with nullable responses
-        if (query == null)
-            query = new QueryResult();
-
-        //For convenience, we autocreate uris that point directly to the wiki page.
+        // Usar https.
         var prefix = UseTls ? "https://" : "http://";
 
         // Formatos.
         foreach (var search in query.SearchResults)
         {
+            // Generar la URL.
             search.Url = new Uri(prefix + request.Language.GetStringValue() + ".wikipedia.org/wiki/" +
                                  search.Title);
+
+            // Limpiar el texto.
             search.Snippet = StringExtensions.CleanText(search.Snippet ?? "");
+
         }
 
+        // Return.
         return searchResp;
     }
 
+
+
+    /// <summary>
+    /// Crear HTTP request.
+    /// </summary>
     private HttpRequestMessage CreateHttpRequest(WikiSearchRequest searchRequest)
     {
         if (!searchRequest.TryValidate(out var message))
@@ -163,6 +180,8 @@ public class WikipediaClient : IDisposable
             new Uri(baseUrl, "api.php?" + UrlHelper.CreateQueryString(queryParams)));
     }
 
+
+
     private void MapWikiMediaRequest(WikiMediaRequest request, Dictionary<string, string> queryParams)
     {
         if (request.Assert != null)
@@ -198,4 +217,28 @@ public class WikipediaClient : IDisposable
         if (request.RequestId != null)
             queryParams.Add("requestid", request.RequestId);
     }
+
+
+
+    /// <summary>
+    /// Liberar recursos.
+    /// </summary>
+    public void Dispose()
+    {
+        Dispose(true);
+        GC.SuppressFinalize(this);
+    }
+
+
+    /// <summary>
+    /// Liberar recursos.
+    /// </summary>
+    /// <param name="disposing"></param>
+    protected virtual void Dispose(bool disposing)
+    {
+        if (disposing)
+            _httpClient?.Dispose();
+    }
+
+
 }
