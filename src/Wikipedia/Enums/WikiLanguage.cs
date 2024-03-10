@@ -1,7 +1,10 @@
 ﻿namespace Wikipedia.Enums;
 
 
-/// <summary>All the supported languages from Wikipedia. Source: http://meta.wikimedia.org/wiki/List_of_Wikipedias</summary>
+/// <summary>
+/// Todos los lenguajes soportados por Wikipedia.
+/// Source: http://meta.wikimedia.org/wiki/List_of_Wikipedias
+/// </summary>
 public enum WikiLanguage
 {
     NotSet = 0,

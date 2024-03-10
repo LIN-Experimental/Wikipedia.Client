@@ -4,7 +4,7 @@ using Wikipedia.Extensions;
 using Wikipedia.Objects;
 using Xunit;
 
-namespace Genbox.Wikipedia.Tests;
+namespace Wikipedia.Tests;
 
 public sealed class WikiSearchRequestTests : IDisposable
 {
@@ -36,12 +36,12 @@ public sealed class WikiSearchRequestTests : IDisposable
         req.Limit = 1;
 
         WikiSearchResponse resp = await _client.SearchAsync(req).ConfigureAwait(false);
-        SearchResult? item = Assert.Single(resp.QueryResult.SearchResults);
+        SearchResult item = Assert.Single(resp.QueryResult.SearchResults);
 
         req.Offset = 1;
         resp = await _client.SearchAsync(req).ConfigureAwait(false);
 
-        SearchResult? otherItem = Assert.Single(resp.QueryResult.SearchResults);
+        SearchResult otherItem = Assert.Single(resp.QueryResult.SearchResults);
 
         Assert.NotEqual(item, otherItem);
     }

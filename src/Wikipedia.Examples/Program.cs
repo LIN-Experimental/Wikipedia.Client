@@ -4,7 +4,7 @@ using Wikipedia;
 using Wikipedia.Enums;
 using Wikipedia.Objects;
 
-namespace Genbox.Wikipedia.Examples;
+namespace Wikipedia.Examples;
 
 internal static class Program
 {
@@ -12,13 +12,20 @@ internal static class Program
     {
 
         //Default language is English
-        using WikipediaClient client = new WikipediaClient();
+        using WikipediaClient client = new ();
 
-        WikiSearchRequest req = new WikiSearchRequest("Albert Einstein");
-        req.Limit = 5; //We would like 5 results
-        req.WhatToSearch = WikiWhat.Text; //We would like to search inside the articles
 
-        WikiSearchResponse resp = await client.SearchAsync(req).ConfigureAwait(false);
+        WikiSearchRequest req = new("Albert Einstein")
+        {
+            Limit = 5,
+            WhatToSearch = WikiWhat.Text,
+            WikiLanguage = WikiLanguage.Spanish,
+            SortOrder = WikiSortOrder.JustMatch
+        };
+
+
+        WikiSearchResponse resp = await client.SearchAsync(req);
+
 
         Console.WriteLine($"Searching for {req.Query}");
         Console.WriteLine();
@@ -45,5 +52,6 @@ internal static class Program
             Console.WriteLine($" - {s.Title}");
             Console.WriteLine($"{s.Snippet}");
         }
+
     }
 }

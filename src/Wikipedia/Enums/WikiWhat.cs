@@ -5,8 +5,10 @@ public enum WikiWhat
 {
     NotSet = 0,
 
-    /// <summary>Search in page titles (default) (if search engine doesn't support title searches, such as Lucene which is used
-    /// by Wikipedia, then it falls back to text)</summary>
+    /// <summary>
+    /// Search in page titles (default) (if search engine doesn't support title searches, such as Lucene which is used
+    /// by Wikipedia, then it falls back to text)
+    /// </summary>
     [StringValue("title")] Title,
 
     /// <summary>Search in page text</summary>

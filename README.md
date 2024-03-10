@@ -4,7 +4,7 @@
 
 ### Caracteristicas
 
-* Soporte para 283 idiomad de Wikipedia.
+* Soporte para 283 idiomas de Wikipedia.
 * Soprte para todos los parámetros de búsqueda a partir de MediaWiki v1.24
 
 ### Ejemplo

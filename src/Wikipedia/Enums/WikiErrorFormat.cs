@@ -5,22 +5,35 @@ public enum WikiErrorFormat
 {
     NotSet = 0,
 
-    /// <summary>Format used prior to MediaWiki 1.29. <see cref="WikiMediaRequest.ErrorLanguageToUse" /> and
-    /// <see cref="WikiMediaRequest.ErrorUseLocalLanguage" /> are ignored.</summary>
+    /// <summary>
+    /// Formato utilizado antes de MediaWiki 1.29. <see cref="WikiMediaRequest.ErrorLanguageToUse" /> y
+    /// <see cref="WikiMediaRequest.ErrorUseLocalLanguage" /> son ignorados.
+    /// </summary>
     [StringValue("bc")] Bc,
 
-    /// <summary>HTML</summary>
+    /// <summary>
+    /// HTML.
+    /// </summary>
     [StringValue("html")] Html,
 
-    /// <summary>No text output, only the error codes.</summary>
+    /// <summary>
+    /// Sin salida de texto, solo los códigos de error.
+    /// </summary>
     [StringValue("none")] None,
 
-    /// <summary>Wikitext with HTML tags removed and entities replaced.</summary>
+    /// <summary>
+    /// Wikitexto con etiquetas HTML eliminadas y entidades reemplazadas.
+    /// </summary>
     [StringValue("plaintext")] Plaintext,
 
-    /// <summary>Message key and parameters.</summary>
+    /// <summary>
+    /// Clave del mensaje y parámetros.
+    /// </summary>
     [StringValue("raw")] Raw,
 
-    /// <summary>Unparsed wikitext.</summary>
+    /// <summary>
+    /// Wikitexto sin analizar.
+    /// </summary>
     [StringValue("wikitext")] WikiText
+
 }

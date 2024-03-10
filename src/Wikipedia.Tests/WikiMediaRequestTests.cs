@@ -2,7 +2,7 @@
 using Wikipedia.Enums;
 using Xunit;
 
-namespace Genbox.Wikipedia.Tests;
+namespace Wikipedia.Tests;
 
 public sealed class WikiMediaRequestTests : IDisposable
 {
