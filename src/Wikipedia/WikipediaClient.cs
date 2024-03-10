@@ -69,8 +69,12 @@ public class WikipediaClient : IDisposable
         //For convenience, we autocreate uris that point directly to the wiki page.
         string prefix = UseTls ? "https://" : "http://";
 
+        // Formatos.
         foreach (SearchResult? search in query.SearchResults)
+        {
             search.Url = new Uri(prefix + request.WikiLanguage.GetStringValue() + ".wikipedia.org/wiki/" + search.Title);
+            search.Snippet = Extensions.StringExtensions.CleanText(search.Snippet ?? "");
+        }
 
         return searchResp;
     }

@@ -1,4 +1,6 @@
-﻿using Wikipedia;
+﻿using System.Threading.Tasks;
+using System;
+using Wikipedia;
 using Wikipedia.Enums;
 using Wikipedia.Objects;
 
@@ -8,6 +10,7 @@ internal static class Program
 {
     private static async Task Main()
     {
+
         //Default language is English
         using WikipediaClient client = new WikipediaClient();
 
@@ -24,6 +27,7 @@ internal static class Program
         foreach (SearchResult s in resp.QueryResult.SearchResults)
         {
             Console.WriteLine($" - {s.Title}");
+            Console.WriteLine($"{s.Snippet}");
         }
 
         Console.WriteLine();
@@ -39,6 +43,7 @@ internal static class Program
         foreach (SearchResult s in resp.QueryResult.SearchResults)
         {
             Console.WriteLine($" - {s.Title}");
+            Console.WriteLine($"{s.Snippet}");
         }
     }
 }
