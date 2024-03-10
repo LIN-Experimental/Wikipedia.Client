@@ -1,44 +1,76 @@
-﻿using Wikipedia.Enums;
+﻿namespace Wikipedia;
 
-namespace Wikipedia;
 
 public abstract class WikiMediaRequest
 {
-    /// <summary>Verify that the user is logged in if set to user, not logged in if set to anon, or has the bot user right if
-    /// bot.</summary>
+
+    /// <summary>
+    /// Verifica si el usuario está conectado si se establece en "user", no está conectado si se establece en "anon", o tiene
+    /// el derecho de usuario de bot si es "bot".
+    /// </summary>
     public string? Assert { get; set; }
 
-    /// <summary>Verify the current user is the named user.</summary>
+
+    /// <summary>
+    /// Verifica que el usuario actual sea el usuario nombrado.
+    /// </summary>
     public string? AssertUser { get; set; }
 
-    /// <summary>Include the hostname that served the request in the results.</summary>
+
+    /// <summary>
+    /// Incluye el nombre de host que sirvió la solicitud en los resultados.
+    /// </summary>
     public bool IncludeServedBy { get; set; }
 
-    /// <summary>Include the current timestamp in the result.</summary>
+
+    /// <summary>
+    /// Incluye la marca de tiempo actual en el resultado.
+    /// </summary>
     public bool IncludeCurrentTimestamp { get; set; }
 
-    /// <summary>Include the languages used for uselang and errorlang in the result.</summary>
+
+    /// <summary>
+    /// Incluye los idiomas utilizados para uselang y errorlang en el resultado.
+    /// </summary>
     public bool IncludeLanguageUsed { get; set; }
 
-    /// <summary>Any value given here will be included in the response. May be used to distinguish requests.</summary>
+
+    /// <summary>
+    /// Cualquier valor dado aquí se incluirá en la respuesta. Puede usarse para distinguir las solicitudes.
+    /// </summary>
     public string? RequestId { get; set; }
 
-    /// <summary>Language to use for message translations. action=query&meta=siteinfo with siprop=languages returns a list of
-    /// language codes, or specify user to use the current user's language preference, or specify content to use this wiki's
-    /// content language.</summary>
+
+    /// <summary>
+    /// Idioma a utilizar para las traducciones de mensajes. action=query&meta=siteinfo con siprop=languages devuelve una
+    /// lista de códigos de idioma, o especifica "user" para usar la preferencia de idioma del usuario actual, o especifica
+    /// "content" para usar el idioma de contenido de esta wiki.
+    /// </summary>
     public string? LanguageToUse { get; set; }
 
-    /// <summary>Variant of the language. Only works if the base language supports variant conversion.</summary>
+
+    /// <summary>
+    /// Variante del idioma. Solo funciona si el idioma base admite la conversión de variantes.
+    /// </summary>
     public string? LanguageVariant { get; set; }
 
-    /// <summary>Format to use for warning and error text output</summary>
+
+    /// <summary>
+    /// Formato a utilizar para la salida de texto de advertencia y error.
+    /// </summary>
     public WikiErrorFormat ErrorFormat { get; set; }
 
-    /// <summary>Language to use for warnings and errors. action=query&meta=siteinfo with siprop=languages returns a list of
-    /// language codes, or specify content to use this wiki's content language, or specify uselang to use the same value as the
-    /// uselang parameter.</summary>
+
+    /// <summary>
+    /// Idioma a utilizar para advertencias y errores. action=query&meta=siteinfo con siprop=languages devuelve una lista de
+    /// códigos de idioma, o especifica "content" para usar el idioma de contenido de esta wiki, o especifica "uselang" para
+    /// usar el mismo valor que el parámetro uselang.
+    /// </summary>
     public string? ErrorLanguageToUse { get; set; }
 
-    /// <summary>If given, error texts will use locally-customized messages from the MediaWiki namespace.</summary>
+
+    /// <summary>
+    /// Si se proporciona, los textos de error utilizarán mensajes personalizados localmente del espacio de nombres MediaWiki.
+    /// </summary>
     public bool ErrorUseLocalLanguage { get; set; }
 }

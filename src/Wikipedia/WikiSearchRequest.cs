@@ -1,76 +1,114 @@
-﻿using Wikipedia.Enums;
+﻿namespace Wikipedia;
 
-namespace Wikipedia;
 
-public class WikiSearchRequest : WikiMediaRequest
+/// <summary>
+/// Nuevo.
+/// </summary>
+/// <param name="query">Consulta.</param>
+public class WikiSearchRequest(string query) : WikiMediaRequest
 {
-    //See https://www.mediawiki.org/wiki/API:Search
 
-    public WikiSearchRequest(string query)
-    {
-        Query = query;
-    }
+    /// <summary>
+    /// Busca títulos de página o contenido que coincida con este valor. Puede utilizar la cadena de búsqueda para invocar características especiales de búsqueda, dependiendo de lo que implemente el backend de búsqueda de la wiki.
+    /// </summary>
+    public string Query { get; set; } = query;
 
-    /// <summary>Search for page titles or content matching this value. You can use the search string to invoke special search
-    /// features, depending on what the wiki's search backend implements.</summary>
-    public string Query { get; set; }
 
-    /// <summary>The namespace(s) to enumerate. Defaults to <see cref="WikiNamespace.Main" />.</summary>
+    /// <summary>
+    /// Los espacios de nombres a enumerar. Por defecto: <see cref="WikiNamespace.Main" />.
+    /// </summary>
     public WikiNamespace NamespacesToInclude { get; set; }
 
-    /// <summary>How many total pages to return. Default: 10, Max: 500</summary>
+
+    /// <summary>
+    /// Cuántas páginas totales devolver. Por defecto: 10, Máx .: 500
+    /// </summary>
     public int Limit { get; set; }
 
-    /// <summary>When more results are available, use this to continue. Default: 0</summary>
+
+    /// <summary>
+    /// Cuando haya más resultados disponibles, use esto para continuar. Por defecto: 0
+    /// </summary>
     public int Offset { get; set; }
 
-    /// <summary>Query independent profile to use (affects ranking algorithm). Defaults to
-    /// <see cref="WikiQueryProfile.AutoSelect" /></summary>
+
+    /// <summary>
+    /// Perfil independiente de la consulta a utilizar (afecta al algoritmo de clasificación). 
+    /// Por defecto: <see cref="WikiQueryProfile.AutoSelect" />
+    /// </summary>
     public WikiQueryProfile QueryIndependentProfile { get; set; }
 
-    /// <summary>Which type of search to perform.</summary>
-    public WikiWhat WhatToSearch { get; set; }
 
-    /// <summary>What metadata to return. Default: TotalHits, Suggestion</summary>
+    /// <summary>
+    /// Qué tipo de búsqueda realizar.
+    /// </summary>
+    public WikiSearchMethod WikiSearchMethod { get; set; }
+
+
+    /// <summary>
+    /// Qué metadatos incluir. Por defecto: TotalHits, Suggestion
+    /// </summary>
     public WikiInfo InfoToInclude { get; set; }
 
-    /// <summary>What property to include in the results. Defaults to a combination of snippet, size, word count and timestamp</summary>
+
+    /// <summary>
+    /// Qué propiedad incluir en los resultados. Por defecto: una combinación de fragmento, tamaño, recuento de palabras y marca de tiempo
+    /// </summary>
     public WikiProperty PropertiesToInclude { get; set; }
 
-    /// <summary>Include InterWiki results in the search, if available.</summary>
+
+    /// <summary>
+    /// Incluir resultados InterWiki en la búsqueda, si están disponibles.
+    /// </summary>
     public bool IncludeInterWikiResults { get; set; }
 
-    /// <summary>Enable internal query rewriting. Some search backends can rewrite the query into another which is thought to
-    /// provide better results, for instance by correcting spelling errors.</summary>
+
+    /// <summary>
+    /// Habilitar la reescritura interna de la consulta.
+    /// Algunos backends de búsqueda pueden reescribir la consulta en otra que se considere que proporciona mejores resultados, por ejemplo, corrigiendo errores ortográficos.
+    /// </summary>
     public bool EnableRewrites { get; set; }
 
-    /// <summary>Set the sort order of returned results. Defaults to Relevance.</summary>
+
+    /// <summary>
+    /// Establecer el orden de clasificación de los resultados devueltos. Por defecto: Relevance.
+    /// </summary>
     public WikiSortOrder SortOrder { get; set; }
 
-    /// <summary>What language to use. Default: English (en)</summary>
-    public WikiLanguage WikiLanguage { get; set; }
 
+    /// <summary>
+    /// Qué idioma utilizar. Por defecto: Inglés (en)
+    /// </summary>
+    public WikiLanguage Language { get; set; }
+
+
+
+    /// <summary>
+    /// Validar.
+    /// </summary>
     public bool TryValidate(out string? message)
     {
         if (Limit > 500)
         {
-            message = nameof(Limit) + " must be between 1 and 500";
+            message = nameof(Limit) + " debe estar entre 1 y 500";
             return false;
         }
 
         if (string.IsNullOrEmpty(Query))
         {
-            message = nameof(Query) + " must be set to a value";
+            message = nameof(Query) + " debe establecerse en un valor";
             return false;
         }
 
-        if (WikiLanguage == WikiLanguage.NotSet)
+        if (Language == WikiLanguage.NotSet)
         {
-            message = nameof(WikiLanguage) + " must be set to a valid value";
+            message = nameof(Language) + " debe establecerse en un valor válido";
             return false;
         }
 
         message = null;
         return true;
     }
+
+
 }

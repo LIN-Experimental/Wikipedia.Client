@@ -18,8 +18,8 @@ internal static class Program
         WikiSearchRequest req = new("Albert Einstein")
         {
             Limit = 5,
-            WhatToSearch = WikiWhat.Text,
-            WikiLanguage = WikiLanguage.Spanish,
+            WikiSearchMethod = WikiSearchMethod.Text,
+            Language = WikiLanguage.Spanish,
             SortOrder = WikiSortOrder.JustMatch
         };
 
@@ -41,7 +41,7 @@ internal static class Program
         Console.WriteLine();
 
         //We change the language to Spanish
-        req.WikiLanguage = WikiLanguage.Spanish;
+        req.Language = WikiLanguage.Spanish;
 
         resp = await client.SearchAsync(req).ConfigureAwait(false);
 

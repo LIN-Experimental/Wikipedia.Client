@@ -5,8 +5,7 @@ namespace Wikipedia.Objects;
 public class SearchResult
 {
     //Default properties
-    [JsonPropertyName("ns")]
-    public int Namespace { get; set; }
+    [JsonPropertyName("ns")] public int Namespace { get; set; }
 
     public string Title { get; set; } = string.Empty;
 
@@ -37,7 +36,9 @@ public class SearchResult
 
     public string? ExtensionData { get; set; }
 
-    /// <summary>The URI that points to the wikipedia page that contains the title. Note: Normalization of the title occurs
-    /// automatically.</summary>
+    /// <summary>
+    ///     The URI that points to the wikipedia page that contains the title. Note: Normalization of the title occurs
+    ///     automatically.
+    /// </summary>
     public Uri Url { get; set; } = null!;
 }

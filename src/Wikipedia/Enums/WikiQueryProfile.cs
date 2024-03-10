@@ -1,13 +1,14 @@
 ﻿namespace Wikipedia.Enums;
 
-
 [Flags]
 public enum WikiQueryProfile
 {
     NotSet = 0,
 
-    /// <summary>Ranking based on the number of incoming links, some templates, page language and recency
-    /// (templates/language/recency may not be activated on this wiki).</summary>
+    /// <summary>
+    ///     Ranking based on the number of incoming links, some templates, page language and recency
+    ///     (templates/language/recency may not be activated on this wiki).
+    /// </summary>
     [StringValue("classic")] Classic = 1 << 0,
 
     /// <summary>Ranking based on some templates, page language and recency when activated on this wiki.</summary>

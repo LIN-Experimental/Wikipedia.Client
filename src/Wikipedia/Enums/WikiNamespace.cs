@@ -1,6 +1,5 @@
 ﻿namespace Wikipedia.Enums;
 
-
 /// <summary>The Wikipedia namespaces. See https://en.wikipedia.org/wiki/Wikipedia:Namespace</summary>
 [Flags]
 public enum WikiNamespace : ulong

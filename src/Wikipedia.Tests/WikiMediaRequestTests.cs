@@ -105,7 +105,7 @@ public sealed class WikiMediaRequestTests : IDisposable
         //Go to https://www.mediawiki.org/w/api.php?action=query&meta=siteinfo&siprop=languages&formatversion=2 to see languages
 
         WikiSearchRequest req = new WikiSearchRequest("Albert Einstein");
-        req.WikiLanguage = WikiLanguage.Spanish;
+        req.Language = WikiLanguage.Spanish;
         req.IncludeLanguageUsed = true;
 
         WikiSearchResponse resp = await _client.SearchAsync(req).ConfigureAwait(false);

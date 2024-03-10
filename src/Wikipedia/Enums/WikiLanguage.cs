@@ -1,9 +1,8 @@
 ﻿namespace Wikipedia.Enums;
 
-
 /// <summary>
-/// Todos los lenguajes soportados por Wikipedia.
-/// Source: http://meta.wikimedia.org/wiki/List_of_Wikipedias
+///     Todos los lenguajes soportados por Wikipedia.
+///     Source: http://meta.wikimedia.org/wiki/List_of_Wikipedias
 /// </summary>
 public enum WikiLanguage
 {

@@ -1,23 +1,22 @@
-﻿using System.Text.RegularExpressions;
+﻿using System.Net;
+using System.Text.RegularExpressions;
 
 namespace Wikipedia.Extensions;
 
 internal class StringExtensions
 {
-
     /// <summary>
-    /// Limpiar el texto.
+    ///     Limpiar el texto.
     /// </summary>
     /// <param name="input">Entrada.</param>
     public static string CleanText(string input)
     {
         // Eliminar etiquetas HTML
-        string textoSinEtiquetas = Regex.Replace(input, "<.*?>", string.Empty);
+        var textoSinEtiquetas = Regex.Replace(input, "<.*?>", string.Empty);
 
         // Convertir entidades HTML a caracteres legibles
-        string textoLimpio = System.Net.WebUtility.HtmlDecode(textoSinEtiquetas);
+        var textoLimpio = WebUtility.HtmlDecode(textoSinEtiquetas);
 
         return textoLimpio;
     }
-
 }

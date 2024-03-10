@@ -1,6 +1,5 @@
 ﻿namespace Wikipedia.Enums;
 
-
 public enum WikiSortOrder
 {
     NotSet = 0,

@@ -1,68 +1,102 @@
-﻿using System.Globalization;
-using System.Text;
+﻿namespace Wikipedia.Internal;
 
-namespace Wikipedia.Internal;
 
 internal static class UrlHelper
 {
-    //Valid URL characters according to RFC3986: https://tools.ietf.org/html/rfc3986#section-2.3
-    private const string _validUrlCharacters = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789-._~";
 
-    private static readonly HashSet<byte> _validUrlLookup = new HashSet<byte>(BuildLookup(_validUrlCharacters));
+    /// <summary>
+    /// Caracteres de URL válidos según RFC3986:
+    /// Fuente: https://tools.ietf.org/html/rfc3986#section-2.3
+    /// </summary>
+    private const string CaracteresUrlValidos = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789-._~";
 
-    private static IEnumerable<byte> BuildLookup(string charList)
+
+    /// <summary>
+    /// HashSet.
+    /// </summary>
+    private static readonly HashSet<byte> CaracteresUrlValidosLookup = BuildLookup(CaracteresUrlValidos);
+
+
+
+    /// <summary>
+    /// Construye un conjunto de bytes para buscar caracteres válidos en una URL.
+    /// Esto se utiliza para determinar qué caracteres necesitan ser escapados al codificar una URL.
+    /// </summary>
+    /// <param name="listaCaracteres">La lista de caracteres válidos en una URL.</param>
+    /// <returns>Un conjunto de bytes que representan los caracteres válidos en una URL.</returns>
+    private static HashSet<byte> BuildLookup(string listaCaracteres)
     {
-        foreach (char c in charList)
+        var lookup = new HashSet<byte>();
+        foreach (var c in listaCaracteres)
         {
-            string escaped = Uri.EscapeUriString(c.ToString(CultureInfo.InvariantCulture));
-            if (escaped.Length == 1 && escaped[0] == c)
-                yield return (byte)c;
+            var escapado = Uri.EscapeUriString(c.ToString(CultureInfo.InvariantCulture));
+            if (escapado.Length == 1 && escapado[0] == c)
+                lookup.Add((byte)c);
         }
+        return lookup;
     }
 
+
+
+    /// <summary>
+    /// Codifica una cadena para que sea segura en una ruta de URL.
+    /// </summary>
+    /// <param name="input">Entrada.</param>
     public static string UrlPathEncode(string input)
     {
-        string[] pathSegments = input.Split('/');
-        return string.Join("/", pathSegments.Select(UrlEncode));
+        string[] segmentosRuta = input.Split('/');
+        return string.Join("/", segmentosRuta.Select(CodeUrl));
     }
 
-    public static string UrlEncode(string data)
-    {
-        StringBuilder sb = new StringBuilder();
 
-        foreach (byte symbol in Encoding.UTF8.GetBytes(data))
+
+    /// <summary>
+    /// Codifica una cadena para que sea segura en una URL.
+    /// </summary>
+    public static string CodeUrl(string data)
+    {
+        var datosCodificados = new StringBuilder();
+        foreach (var symbol in Encoding.UTF8.GetBytes(data))
         {
-            if (_validUrlLookup.Contains(symbol))
-                sb.Append((char)symbol);
+            if (CaracteresUrlValidosLookup.Contains(symbol))
+                datosCodificados.Append((char)symbol);
             else
-                sb.Append('%').AppendFormat(CultureInfo.InvariantCulture, "{0:X2}", symbol);
+                datosCodificados.Append('%').AppendFormat(CultureInfo.InvariantCulture, "{0:X2}", symbol);
         }
-
-        return sb.ToString();
+        return datosCodificados.ToString();
     }
 
-    public static string CreateQueryString(IEnumerable<KeyValuePair<string, string>> parameters, bool encode = true, bool outputEqualOnEmpty = false)
+
+
+    /// <summary>
+    /// Crea una cadena de consulta a partir de una colección de pares clave-valor.
+    /// </summary>
+    public static string CreateQueryString(IEnumerable<KeyValuePair<string, string>> parametros, bool codificar = true,
+        bool mostrarIgualEnVacio = false)
     {
-        StringBuilder sb = new StringBuilder();
-
-        foreach (KeyValuePair<string, string> item in parameters)
+        var constructorCadenaConsulta = new StringBuilder();
+        foreach (var elemento in parametros)
         {
-            if (sb.Length > 0)
-                sb.Append('&');
+            if (constructorCadenaConsulta.Length > 0)
+                constructorCadenaConsulta.Append('&');
 
-            string encodedKey = encode ? UrlEncode(item.Key) : item.Key;
+            var claveCodificada = codificar ? CodeUrl(elemento.Key) : elemento.Key;
 
-            if (string.IsNullOrEmpty(item.Value))
+            if (string.IsNullOrEmpty(elemento.Value))
             {
-                sb.Append(encodedKey);
+                constructorCadenaConsulta.Append(claveCodificada);
 
-                if (outputEqualOnEmpty)
-                    sb.Append('=');
+                if (mostrarIgualEnVacio)
+                    constructorCadenaConsulta.Append('=');
             }
             else
-                sb.Append(encodedKey).Append('=').Append(encode ? UrlEncode(item.Value) : item.Value);
+            {
+                constructorCadenaConsulta.Append(claveCodificada).Append('=').Append(codificar ? CodeUrl(elemento.Value) : elemento.Value);
+            }
         }
 
-        return sb.ToString();
+        return constructorCadenaConsulta.ToString();
     }
+
+
 }

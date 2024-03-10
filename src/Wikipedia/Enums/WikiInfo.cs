@@ -1,6 +1,5 @@
 namespace Wikipedia.Enums;
 
-
 [Flags]
 public enum WikiInfo
 {

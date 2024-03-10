@@ -60,7 +60,7 @@ public sealed class WikiSearchRequestTests : IDisposable
     public async Task WhatToSearchTest()
     {
         WikiSearchRequest req = new WikiSearchRequest("Albert Einstein");
-        req.WhatToSearch = WikiWhat.Text;
+        req.WikiSearchMethod = WikiSearchMethod.Text;
 
         WikiSearchResponse resp = await _client.SearchAsync(req).ConfigureAwait(false);
         Assert.NotNull(resp.QueryResult);

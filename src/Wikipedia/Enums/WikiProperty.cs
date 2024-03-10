@@ -1,6 +1,5 @@
 namespace Wikipedia.Enums;
 
-
 [Flags]
 public enum WikiProperty : uint
 {
@@ -43,7 +42,7 @@ public enum WikiProperty : uint
     [StringValue("extensiondata")] ExtensionData = 1 << 11,
 
     /// <summary>
-    /// Include all properties
+    ///     Include all properties
     /// </summary>
     All = uint.MaxValue
 }

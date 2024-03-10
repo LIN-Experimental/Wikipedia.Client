@@ -1,15 +1,29 @@
-﻿using System.Text.Json;
+﻿namespace Wikipedia.Internal;
 
-namespace Wikipedia.Internal;
 
 internal class LowerCasePolicy : JsonNamingPolicy
 {
+
+    /// <summary>
+    /// Instancia estática de la política de minúsculas.
+    /// </summary>
     public static readonly JsonNamingPolicy Instance = new LowerCasePolicy();
 
-    private LowerCasePolicy() { }
 
-    public override string ConvertName(string name)
+
+    /// <summary>
+    /// Constructor privado para evitar instancias externas.
+    /// </summary>
+    private LowerCasePolicy()
     {
-        return name.ToLowerInvariant();
     }
+
+
+    /// <summary>
+    /// Método para convertir el nombre a minúsculas.
+    /// </summary>
+    /// <param name="name">Nombre.</param>
+    public override string ConvertName(string name) => name.ToLowerInvariant();
+   
+
 }

@@ -8,6 +8,6 @@ public class Error
 
     public string? Info { get; set; }
 
-    [JsonPropertyName("docref")]
+    [JsonPropertyName("docref")] 
     public string? DocumentReference { get; set; }
 }

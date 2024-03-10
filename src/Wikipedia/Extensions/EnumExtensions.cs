@@ -1,53 +1,57 @@
-﻿using System.Reflection;
-using System.Text;
-using Wikipedia.Internal;
+﻿namespace Wikipedia.Extensions;
 
-namespace Wikipedia.Extensions;
 
 public static class EnumExtensions
 {
+
     /// <summary>
-    /// Convert a flags enum into a sequence of string values concatenated with |. E.g. Value1|Value2.
+    /// Convierte un enum de banderas en una secuencia de valores de cadena concatenados con |. 
+    /// Ejemplo: Valor1|Valor2.
     /// </summary>
     public static string GetConcatValues(this Enum value)
     {
-        StringBuilder sb = new StringBuilder();
+        // Builder.
+        var stringBuilder = new StringBuilder();
 
-        foreach (Enum e in Enum.GetValues(value.GetType()))
+        foreach (Enum enumValue in Enum.GetValues(value.GetType()))
         {
-            //This library follows a convention where all enums have a NotSet value. We do not want that in our output
-            if (string.Equals(e.ToString(), "NotSet", StringComparison.OrdinalIgnoreCase))
+            // Esta biblioteca sigue una convención donde todos los enums tienen un valor NotSet. No queremos eso en nuestra salida
+            if (string.Equals(enumValue.ToString(), "NotSet", StringComparison.OrdinalIgnoreCase))
                 continue;
 
-            //Same as above
-            if (string.Equals(e.ToString(), "All", StringComparison.OrdinalIgnoreCase))
+            // Lo mismo que arriba
+            if (string.Equals(enumValue.ToString(), "All", StringComparison.OrdinalIgnoreCase))
                 continue;
 
-            if (value.HasFlag(e))
-                sb.Append(e.GetStringValue()).Append('|');
+            if (value.HasFlag(enumValue))
+                stringBuilder.Append(enumValue.GetStringValue()).Append('|');
         }
 
-        return sb.ToString().TrimEnd('|');
+        return stringBuilder.ToString().TrimEnd('|');
     }
 
-    /// <summary>Will get the string value for a given enums value, this will only work if you assign the StringValue attribute
-    /// to the items in your enum. Source:
-    /// http://weblogs.asp.net/stefansedich/archive/2008/03/12/enum-with-string-values-in-c.aspx</summary>
+
+    /// <summary>
+    /// Obtiene el valor de cadena para un valor de enum dado. Esto solo funcionará si asignas el atributo StringValue
+    /// a los elementos en tu enum.
+    /// </summary>
     public static string GetStringValue(this Enum value)
     {
-        // Get the type
-        Type type = value.GetType();
+        // Obtener el tipo.
+        var type = value.GetType();
 
-        // Get fieldinfo for this type
-        FieldInfo fieldInfo = type.GetField(value.ToString());
+        // Obtener FieldInfo para este tipo.
+        var fieldInfo = type.GetField(value.ToString());
 
-        // Get the stringvalue attributes
-        StringValueAttribute[] attr = fieldInfo.GetCustomAttributes<StringValueAttribute>(false).ToArray();
+        // Obtener los atributos StringValue.
+        var attributes = fieldInfo.GetCustomAttributes<StringValueAttribute>(false).ToArray();
 
-        if (attr.Length == 0)
-            throw new InvalidOperationException("Unable to find StringValue attribute on " + type.Name);
+        if (attributes.Length == 0)
+            throw new InvalidOperationException("No se pudo encontrar el atributo StringValue en " + type.Name);
 
-        // Return the first if there was a match.
-        return attr[0].StringValue;
+        // Devuelve el primero si hubo coincidencia.
+        return attributes[0].StringValue;
     }
+
+
 }
