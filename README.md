@@ -1,18 +1,15 @@
-# Wikipedia - An implementation of the full text search API of Wikipedia
+# Wikipedia - Una implementación de la API de búsqueda de texto completo de Wikipedia
 
-[![NuGet](https://img.shields.io/nuget/v/Genbox.Wikipedia.svg?style=flat-square&label=nuget)](https://www.nuget.org/packages/Genbox.Wikipedia/)
-[![Build](https://img.shields.io/github/workflow/status/Genbox/Wikipedia/Generic%20build?label=Build)](https://github.com/Genbox/Wikipedia/actions)
-[![Release](https://img.shields.io/github/workflow/status/Genbox/Wikipedia/Nuget%20release?label=Release)](https://github.com/Genbox/Wikipedia/actions)
 [![License](https://img.shields.io/github/license/Genbox/Wikipedia)](https://github.com/Genbox/Wikipedia/blob/master/LICENSE.txt)
 
-### Features
+### Caracteristicas
 
-* Support for all 283 languages on Wikipedia
-* Support for all search parameters as of MediaWiki v1.24
+* Soporte para 283 idiomad de Wikipedia.
+* Soprte para todos los parámetros de búsqueda a partir de MediaWiki v1.24
 
-### Example
+### Ejemplo
 
-Here is the simplest way of getting data from Wikipedia:
+Esta es la forma más sencilla de obtener datos de Wikipedia:
 
 ```csharp
 static async Task Main()
@@ -20,7 +17,7 @@ static async Task Main()
     using WikipediaClient client = new WikipediaClient();
     
     WikiSearchRequest req = new WikiSearchRequest("Albert Einstein");
-    req.Limit = 5; //We would like 5 results
+    req.Limit = 5; // 5 Resultados.
     
     WikiSearchResponse resp = await client.SearchAsync(req);
     
