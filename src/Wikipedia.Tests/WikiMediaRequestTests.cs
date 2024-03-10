@@ -1,4 +1,6 @@
-﻿using Wikipedia;
+﻿using System;
+using System.Threading.Tasks;
+using Wikipedia;
 using Wikipedia.Enums;
 using Xunit;
 
