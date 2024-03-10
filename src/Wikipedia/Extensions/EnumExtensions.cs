@@ -1,8 +1,8 @@
 ﻿using System.Reflection;
 using System.Text;
-using Genbox.Wikipedia.Internal;
+using Wikipedia.Internal;
 
-namespace Genbox.Wikipedia.Extensions;
+namespace Wikipedia.Extensions;
 
 public static class EnumExtensions
 {

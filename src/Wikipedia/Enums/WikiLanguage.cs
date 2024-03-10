@@ -1,6 +1,5 @@
-﻿using Genbox.Wikipedia.Internal;
+﻿namespace Wikipedia.Enums;
 
-namespace Genbox.Wikipedia.Enums;
 
 /// <summary>All the supported languages from Wikipedia. Source: http://meta.wikimedia.org/wiki/List_of_Wikipedias</summary>
 public enum WikiLanguage

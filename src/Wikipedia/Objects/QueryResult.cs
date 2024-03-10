@@ -1,6 +1,6 @@
 using System.Text.Json.Serialization;
 
-namespace Genbox.Wikipedia.Objects;
+namespace Wikipedia.Objects;
 
 public class QueryResult
 {

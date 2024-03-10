@@ -1,9 +1,9 @@
 ﻿global using System;
 global using System.Text.Json;
-global using Genbox.Wikipedia.Enums;
-global using Genbox.Wikipedia.Extensions;
-global using Genbox.Wikipedia.Internal;
-global using Genbox.Wikipedia.Objects;
+global using Wikipedia.Enums;
+global using Wikipedia.Extensions;
+global using Wikipedia.Internal;
+global using Wikipedia.Objects;
 global using System.Net.Http;
 global using System.Threading;
 global using System.Threading.Tasks;

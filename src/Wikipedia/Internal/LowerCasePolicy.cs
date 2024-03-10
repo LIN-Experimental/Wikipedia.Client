@@ -1,6 +1,6 @@
 ﻿using System.Text.Json;
 
-namespace Genbox.Wikipedia.Internal;
+namespace Wikipedia.Internal;
 
 internal class LowerCasePolicy : JsonNamingPolicy
 {

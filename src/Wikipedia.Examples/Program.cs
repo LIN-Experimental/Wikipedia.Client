@@ -1,5 +1,6 @@
-﻿using Genbox.Wikipedia.Enums;
-using Genbox.Wikipedia.Objects;
+﻿using Wikipedia;
+using Wikipedia.Enums;
+using Wikipedia.Objects;
 
 namespace Genbox.Wikipedia.Examples;
 

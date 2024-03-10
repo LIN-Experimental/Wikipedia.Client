@@ -1,6 +1,5 @@
-﻿using Genbox.Wikipedia.Internal;
+﻿namespace Wikipedia.Enums;
 
-namespace Genbox.Wikipedia.Enums;
 
 /// <summary>The Wikipedia namespaces. See https://en.wikipedia.org/wiki/Wikipedia:Namespace</summary>
 [Flags]

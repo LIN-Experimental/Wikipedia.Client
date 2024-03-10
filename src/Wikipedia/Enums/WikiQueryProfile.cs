@@ -1,6 +1,5 @@
-﻿using Genbox.Wikipedia.Internal;
+﻿namespace Wikipedia.Enums;
 
-namespace Genbox.Wikipedia.Enums;
 
 [Flags]
 public enum WikiQueryProfile

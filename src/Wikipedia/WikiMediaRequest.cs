@@ -1,6 +1,6 @@
-﻿using Genbox.Wikipedia.Enums;
+﻿using Wikipedia.Enums;
 
-namespace Genbox.Wikipedia;
+namespace Wikipedia;
 
 public abstract class WikiMediaRequest
 {

@@ -1,6 +1,4 @@
-﻿
-
-namespace Genbox.Wikipedia;
+﻿namespace Wikipedia;
 
 
 public class WikipediaClient : IDisposable

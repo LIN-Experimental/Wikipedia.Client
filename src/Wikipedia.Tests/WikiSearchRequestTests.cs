@@ -1,6 +1,7 @@
-﻿using Genbox.Wikipedia.Enums;
-using Genbox.Wikipedia.Extensions;
-using Genbox.Wikipedia.Objects;
+﻿using Wikipedia;
+using Wikipedia.Enums;
+using Wikipedia.Extensions;
+using Wikipedia.Objects;
 using Xunit;
 
 namespace Genbox.Wikipedia.Tests;

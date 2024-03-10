@@ -1,17 +1,17 @@
 using System.Text.Json.Serialization;
-using Genbox.Wikipedia.Objects;
+using Wikipedia.Objects;
 
-namespace Genbox.Wikipedia;
+namespace Wikipedia;
 
 public class WikiSearchResponse
 {
     public bool BatchComplete { get; set; }
     public Continuation? Continue { get; set; }
-    
+
     [JsonPropertyName("query")]
     public QueryResult? QueryResult { get; set; }
     public Error? Error { get; set; }
-    
+
     [JsonPropertyName("errors")]
     public IList<ModuleError>? ModuleErrors { get; set; }
     public string? ServedBy { get; set; }

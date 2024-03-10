@@ -1,4 +1,5 @@
-﻿using Genbox.Wikipedia.Enums;
+﻿using Wikipedia;
+using Wikipedia.Enums;
 using Xunit;
 
 namespace Genbox.Wikipedia.Tests;
