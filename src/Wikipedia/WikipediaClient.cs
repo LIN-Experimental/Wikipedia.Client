@@ -1,10 +1,7 @@
-﻿using System.Text.Json;
-using Genbox.Wikipedia.Enums;
-using Genbox.Wikipedia.Extensions;
-using Genbox.Wikipedia.Internal;
-using Genbox.Wikipedia.Objects;
+﻿
 
 namespace Genbox.Wikipedia;
+
 
 public class WikipediaClient : IDisposable
 {
