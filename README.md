@@ -1,7 +1,5 @@
 # Wikipedia - Una implementación de la API de búsqueda de texto completo de Wikipedia
 
-[![License](https://img.shields.io/github/license/Genbox/Wikipedia)](https://github.com/Genbox/Wikipedia/blob/master/LICENSE.txt)
-
 ### Caracteristicas
 
 * Soporte para 283 idiomas de Wikipedia.
